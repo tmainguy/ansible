@@ -14,12 +14,10 @@
   get_url: dest=/tmp url={{ wildfly_url}}
 
 - name: create dir
-  file: path=/opt/wildfly state=directory owner={{ wildfly_user }} mode=0775
+  file: path={{ wildfly_dir }} state=directory owner={{ wildfly_user }} mode=0775
 
 - name: Unarchive downloaded file
-  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz
-             dest=/opt/wildfly 
-             owner={{ wildfly_user }} mode=0750
+  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz dest=/opt/wildfly owner={{ wildfly_user }} mode=0750
 
 
 

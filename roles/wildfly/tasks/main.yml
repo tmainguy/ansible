@@ -1,4 +1,7 @@
 ---
+
+- include: openjdk.yml version=openjdk-7-jdk
+
 - name: Install OpenJDK
   apt: name=openjdk-7-jdk state=present
 
@@ -16,6 +19,5 @@
   unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz
              dest=/opt/wildfly 
              owner={{ wildfly_user }} mode=0750
-
 
 

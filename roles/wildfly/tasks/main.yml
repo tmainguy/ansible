@@ -1,0 +1,21 @@
+---
+- name: Install OpenJDK
+  apt: name=openjdk-7-jre state=present
+
+- name: Create wildfly user
+  user: name={{ wildfly_user }} group=root createhome=no
+        state=present
+
+- name: Download wildfly tar file
+  get_url: dest=/tmp url={{ wildfly_url}}
+
+- name: create dir
+  file: path=/opt/wildfly state=directory owner={{ wildfly_user }} mode=0775
+
+- name: Unarchive downloaded file
+  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz
+             dest=/opt/wildfly 
+             owner={{ wildfly_user }} mode=0750
+
+
+

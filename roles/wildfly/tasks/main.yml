@@ -11,14 +11,19 @@
         state=present
 
 - name: Download wildfly tar file
-  get_url: dest=/tmp url={{ wildfly_url}}
+  get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  mode=777 force=no 
 
 - name: create dir
-  file: path={{ wildfly_dir }} state=directory owner={{ wildfly_user }} mode=0775
+  file: path={{ wildfly_dir }} state=directory owner={{ wildfly_user }} mode=755
 
 - name: Unarchive downloaded file
-  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz dest=/opt/wildfly owner={{ wildfly_user }} mode=0750
+  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz dest={{ wildfly_dir }} copy=no owner={{ wildfly_user }} mode=0750
 
+- name: Copy wildfly configuration
+  template: src=wildfly.conf dest=/etc/default/wildfly owner=root group=root mode=0640
 
+- name: Copy wildfly service
+  copy: src=wildfly dest=/etc/init.d/wildfly owner=root group=root mode=0755
 
-- service: name=wildfly state=startde enabled=yes
+- name: demarrage du service
+  service: name=wildfly state=started enabled=yes

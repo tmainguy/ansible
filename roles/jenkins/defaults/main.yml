@@ -1,0 +1,6 @@
+---
+# defaults file for  jenkins
+
+jenkins_version: latest
+
+jenkins_url: http://mirrors.jenkins-ci.org/war/

@@ -10,7 +10,7 @@
   get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
 
 - name: Extract wildfly
-  command: tar -xzf wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1
+  command: tar -xzf /tmp/wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1
 
 - name: create dir
   file: path={{ wildfly_dir }}

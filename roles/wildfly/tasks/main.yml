@@ -3,27 +3,26 @@
 
 - include: openjdk.yml version=openjdk-7-jdk
 
-- name: Install OpenJDK
-  apt: name=openjdk-7-jdk state=present
-
 - name: Create wildfly user
-  user: name={{ wildfly_user }} group=root createhome=no
-        state=present
+  user: name={{ wildfly_user }} group=root createhome=no state=present
 
 - name: Download wildfly tar file
-  get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  mode=777 force=no 
+  get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
+
+- name: Extract wildfly
+  command: tar -xzf wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1
 
 - name: create dir
-  file: path={{ wildfly_dir }} state=directory owner={{ wildfly_user }} group=root mode=775
-
-- name: Unarchive downloaded file
-  unarchive: src=/tmp/wildfly-servlet-9.0.2.Final.tar.gz dest={{ wildfly_dir }} copy=no owner={{ wildfly_user }} group=root mode=775
+  file: path={{ wildfly_dir }}
+        state=directory
+        owner={{ wildfly_user }}
+        group=root mode=775
 
 - name: Copy wildfly configuration
-  template: src=wildfly.conf dest=/etc/default/wildfly owner=root group=root mode=640
+  template: src=wildfly.conf dest=/etc/default/wildfly owner=root group=root mode=0644
 
-- name: Copy wildfly service
-  copy: src=wildfly dest=/etc/init.d/wildfly owner=root group=root mode=755
+- name: Service creation
+  copy: src=wildfly dest=/etc/init.d/wildfly owner=root group=root mode=0755
 
-- name: demarrage du service
+- name: Start wildfly service
   service: name=wildfly state=started enabled=yes

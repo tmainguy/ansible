@@ -1,0 +1,18 @@
+---
+
+- hosts: Web
+  sudo: yes
+  tasks:
+   - debug: msg="message de debug"
+   - name: installation openjdk
+     apt: name=openjdk-7-jdk state=present
+
+
+- hosts: Web
+  sudo: yes
+  serial: 1
+  tasks:
+   - name: installation openjdk encore
+     apt: name=openjdk-7-jdk state=present
+   - name: Pause
+     pause:

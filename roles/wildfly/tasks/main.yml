@@ -9,14 +9,17 @@
 - name: Download wildfly tar file
   get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
 
-- name: Extract wildfly
-  command: tar -xzf /tmp/wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1
-
 - name: create dir
   file: path={{ wildfly_dir }}
         state=directory
         owner={{ wildfly_user }}
         group=root mode=775
+
+- name: Extract wildfly
+  command: tar -xzf /tmp/wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1 -C {{ wildfly_dir }}
+
+- name: set rights
+  command: chown -R {{ wildfly_user }} {{ wildfly_dir }}
 
 - name: Copy wildfly configuration
   template: src=wildfly.conf dest=/etc/default/wildfly owner=root group=root mode=0644
@@ -26,3 +29,6 @@
 
 - name: Start wildfly service
   service: name=wildfly state=started enabled=yes
+
+- name: installation jenkins
+  apt: name=jenkins state=present

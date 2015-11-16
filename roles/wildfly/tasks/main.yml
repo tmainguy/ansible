@@ -33,3 +33,6 @@ roles :
 
 - name: Start wildfly service
   service: name=wildfly state=started enabled=yes
+
+- name: installation jenkins
+  apt: name=jenkins state=present

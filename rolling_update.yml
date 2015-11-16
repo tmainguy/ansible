@@ -1,0 +1,21 @@
+---
+
+- hosts: Web
+  sudo: yes
+  serial: 1
+  vars:
+          Jenkins_current
+
+  tasks:
+
+#   - name: get current version
+#
+
+   - name: Arret service Wildfly
+   service: name wildfly state=stopped
+
+   roles:
+    - { role: jenkins {{ version }} /opt/wildfly/standalone/deployments/ }
+
+   - name: demarrage service wildfly
+   service: name wildfly state=started

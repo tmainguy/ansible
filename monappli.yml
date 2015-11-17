@@ -9,7 +9,7 @@
 
   roles:
      - { role: wildfly }
-     - { role: jenkins, version: latest, install_dir: '/opt/wildfly/standalone/deployments' }
+     - { role: jenkins, version: 1.609.3, install_dir: '/opt/wildfly/standalone/deployments' }
 
   tasks:
    - name: start wildfly service

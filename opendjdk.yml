@@ -1,7 +1,0 @@
----
- 
-- hosts: Web
-  sudo: yes
-  tasks:
-   - name: installation openjdk
-     apt: name=openjdk-7-jre state=present

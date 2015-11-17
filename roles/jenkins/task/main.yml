@@ -1,9 +1,0 @@
----
-
-- name: Download jenkins tar file
-  get_url: dest=/tmp url={{ jenkins_url }}{{ verion }}/jenkins.war owner={{ wildfly_user }}  force=no
-
-- name: Unarchive downloaded file
-  command: tar -xzf /tmp/jenkins.war --strip-components=& -C {{ install_dir }}
-
-

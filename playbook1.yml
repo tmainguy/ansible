@@ -1,6 +1,0 @@
----
-
-- hosts: Web
-  sudo: yes
-  roles:
-     - { role: wildfly }

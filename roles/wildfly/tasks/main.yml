@@ -6,8 +6,8 @@
 - name: Create wildfly user
   user: name={{ wildfly_user }} group=root createhome=no state=present
 
-- name: Download wildfly tar file
-  get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
+#- name: Download wildfly tar file
+#  get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
 
 - name: create dir
   file: path={{ wildfly_dir }}
@@ -27,9 +27,5 @@
 - name: Service creation
   copy: src=wildfly dest=/etc/init.d/wildfly owner=root group=root mode=0755
 
-- name: installation jenkins
-roles : 
-  - { role: jenkins 1.625.1 /opt/wildfly/standalone/deployments/ }
-
-- name: Start wildfly service
-  service: name=wildfly state=started enabled=yes
+- name: enabled wildfly service
+  service: name=wildfly state=stopped enabled=yes

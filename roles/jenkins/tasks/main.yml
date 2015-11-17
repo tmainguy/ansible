@@ -1,0 +1,12 @@
+---
+
+- name: Download jenkins tar file
+  get_url: dest=/tmp url={{ jenkins_url }}{{ version }}/jenkins.war owner=wildfly  force=no
+
+- name: Unarchive downloaded file
+  command: cp /tmp/jenkins.war {{ install_dir }}
+
+- name: set right
+  command: chown wildfly {{ install_dir }}/jenkins.war
+
+

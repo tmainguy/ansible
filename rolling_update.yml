@@ -4,18 +4,18 @@
   sudo: yes
   serial: 1
   vars:
-          Jenkins_current
+    new_jenkins_version: "{{ new_version |default('1.609.1') }}"
 
   tasks:
-
-#   - name: get current version
-#
-
    - name: Arret service Wildfly
-   service: name wildfly state=stopped
+     service: name=wildfly state=stopped
 
-   roles:
-    - { role: jenkins {{ version }} /opt/wildfly/standalone/deployments/ }
+  roles:
+   - { role: jenkins, version: '{{ new_jenkins_version }}', install_dir: '/opt/wildfly/standalone/deployments/' }
 
+  tasks:
    - name: demarrage service wildfly
-   service: name wildfly state=started
+     service: name=wildfly state=started
+
+   - name: affichage message
+     debug: msg="web mis a jour en version {{ new_jenkins_version }} "

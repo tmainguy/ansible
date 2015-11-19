@@ -1,9 +1,2 @@
 ---
 
-- name: Download jenkins war file
-  get_url: dest={{ install_dir }} url={{ jenkins_url }}{{ version }}/jenkins.war owner=wildfly  force=no
-
-- name: set right
-  command: chown wildfly {{ install_dir }}/jenkins.war
-
-

@@ -4,23 +4,19 @@
 - include: openjdk.yml version=openjdk-7-jdk
 
 - name: Create wildfly user
-#  user: name={{ wildfly_user }} group=root createhome=no state=present
-  user: name={{ wildfly_user }} group=root state=present
+  user: name={{ wildfly_user }} group=root home=/opt/wildfly state=present
 
 - name: Download wildfly tar file
   get_url: dest=/tmp url={{ wildfly_url}} owner={{ wildfly_user }}  force=no 
-
-- name: create dir
-  file: path={{ wildfly_dir }}
-        state=directory
-        owner={{ wildfly_user }}
-        group=root mode=775
+  register: wildflydwl
 
 - name: Extract wildfly
   command: tar -xzf /tmp/wildfly-servlet-9.0.2.Final.tar.gz --strip-components=1 -C {{ wildfly_dir }}
+  when: wildflydwl.changed
 
 - name: set rights
   command: chown -R {{ wildfly_user }} {{ wildfly_dir }}
+  when: wildflydwl.changed
 
 - name: Copy wildfly configuration
   template: src=wildfly.conf dest=/etc/default/wildfly owner=root group=root mode=0644
